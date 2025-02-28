@@ -121,7 +121,7 @@
 	svgStore.subscribe((svgs) => {
 		svgs.forEach((svg, index) => {
 			if (!renderedSVGs.has(svg)) {
-				createFallingSVG(Math.random() * window.innerWidth * 0.75, 50, svg, 50, 50);
+				createFallingSVG(Math.random() * window.innerWidth * 0.75, 75, svg, 75, 75);
 				renderedSVGs.add(svg);
 			}
 		});

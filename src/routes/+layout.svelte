@@ -17,14 +17,16 @@
 			svgStore.update((svgs) => [...svgs, gptSVG]);
 		}
 	}
-
-	function handleSubmit(event: Event) {
+	let loading = false;
+	async function handleSubmit(event: Event) {
+		loading = true;
 		event.preventDefault();
 		const form = event.target as HTMLFormElement;
 		const words = Array.from(form.querySelectorAll('input')).map((input) => input.value);
 
-		getStyle(words.join('+'));
-		words.forEach((word) => getSVG(word));
+		await getStyle(words.join('+'));
+		words.forEach(async (word) => await getSVG(word));
+		loading = false;
 	}
 </script>
 
@@ -33,20 +35,20 @@
 </svelte:head>
 
 <main class="gpt-main">
-	<div class="gpt-header header">
-		<h1>SHFTR</h1>
-	</div>
 	<slot></slot>
 	<div class="controls">
-		<h3 class="gpt-text">Enter three words to generate a style</h3>
+		<h3 class="gpt-text">Enter three words</h3>
 		<form onsubmit={handleSubmit} class="control-form">
 			<input class="gpt-input" type="text" />
 			+
 			<input class="gpt-input" type="text" />
 			+
 			<input class="gpt-input" type="text" />
-			<button class="gpt-button" type="submit">=</button>
+			<button class="gpt-button" type="submit" disabled={loading}>=</button>
 		</form>
+		{#if loading}
+			<p>Loading...</p>
+		{/if}
 	</div>
 </main>
 
