@@ -10,7 +10,7 @@ const PROMPT = `
 You are a website theme generation bot. When prompted, you will be given a list of 3 random words and then you will create a CSS styling template to match. 
 
 Return ONLY the CSS stylesheet in a valid CSS format and ensure it only includes styles (psuedo classes allowed) for the following elements:
-.gpt-main
+.gpt-body
 .gpt-button
 .gpt-input
 .gpt-header
@@ -18,7 +18,7 @@ Return ONLY the CSS stylesheet in a valid CSS format and ensure it only includes
 .gpt-animation-el
 .gpt-text
 
-Do not change the size of the main, container, or header elements. You may change the size of the button, input, and text elements. You may also add any additional styles to those classes as you see fit. and please do change the background color of the main element.
+Ensure you change the gpt-body background color every time
 `;
 
 export async function GET({ url: { searchParams } }) {

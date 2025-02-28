@@ -34,7 +34,7 @@
 	{@html `<style>${gptStyle}</style>`}
 </svelte:head>
 
-<main class="gpt-main">
+<main class="gpt-body">
 	<slot></slot>
 	<div class="controls">
 		<h3 class="gpt-text">Enter three words</h3>

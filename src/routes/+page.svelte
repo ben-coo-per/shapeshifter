@@ -112,6 +112,23 @@
 			restitution: 0.1
 		});
 
+		// create left wall
+		const leftWall: pl.Body = world.createBody();
+		leftWall.createFixture(pl.Edge(pl.Vec2(0, 0), pl.Vec2(0, canvas.height)), {
+			friction: 1.0,
+			restitution: 0.1
+		});
+
+		// create right wall
+		const rightWall: pl.Body = world.createBody();
+		rightWall.createFixture(
+			pl.Edge(pl.Vec2(canvas.width, 0), pl.Vec2(canvas.width, canvas.height)),
+			{
+				friction: 1.0,
+				restitution: 0.1
+			}
+		);
+
 		update();
 	});
 
@@ -121,7 +138,7 @@
 	svgStore.subscribe((svgs) => {
 		svgs.forEach((svg, index) => {
 			if (!renderedSVGs.has(svg)) {
-				createFallingSVG(Math.random() * window.innerWidth * 0.75, 75, svg, 75, 75);
+				createFallingSVG(Math.random() * window.innerWidth * 0.5 + 100, 75, svg, 75, 75);
 				renderedSVGs.add(svg);
 			}
 		});
