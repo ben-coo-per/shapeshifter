@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { svgStore } from '$lib/svgStore';
 	let gptStyle = ``;
 	let gptSVG = ``;
 
@@ -10,11 +11,16 @@
 	async function getSVG(word: string) {
 		const response = await fetch(`/get-svg?word=${word}`);
 		gptSVG = await response.json();
+
+		if (gptSVG) {
+			svgStore.update((svgs) => [...svgs, gptSVG]);
+		}
 	}
 
-	function handleSubmit(event) {
+	function handleSubmit(event: Event) {
 		event.preventDefault();
-		const words = Array.from(event.target.querySelectorAll('input')).map((input) => input.value);
+		const form = event.target as HTMLFormElement;
+		const words = Array.from(form.querySelectorAll('input')).map((input) => input.value);
 
 		getStyle(words.join('+'));
 		getSVG(words[0]);
@@ -39,15 +45,11 @@
 		<button class="gpt-button" type="submit">=</button>
 	</form>
 
-	{#if gptSVG}
-		{@html gptSVG}
-	{/if}
 	<slot></slot>
 </main>
 
 <style>
 	main {
-		height: 100vh;
 		margin: -8px;
 		padding: 8px;
 	}
