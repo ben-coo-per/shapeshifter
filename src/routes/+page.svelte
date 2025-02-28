@@ -121,20 +121,20 @@
 	svgStore.subscribe((svgs) => {
 		svgs.forEach((svg, index) => {
 			if (!renderedSVGs.has(svg)) {
-				console.log('Rendering SVG:', svg);
-				createFallingSVG(50 + index * 60, 50, svg, 50, 50);
+				createFallingSVG(Math.random() * window.innerWidth * 0.75, 50, svg, 50, 50);
 				renderedSVGs.add(svg);
 			}
 		});
 	});
 </script>
 
-<canvas bind:this={canvas} class="border"></canvas>
+<canvas bind:this={canvas} class="gpt-container"></canvas>
 
 <style>
 	canvas {
 		display: block;
-		width: 60%;
-		border: 1px solid black;
+		width: 80%;
+		height: 50%;
+		margin: 16px auto 0 auto;
 	}
 </style>

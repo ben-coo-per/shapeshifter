@@ -17,6 +17,8 @@ Return ONLY the CSS stylesheet in a valid CSS format and ensure it only includes
 .gpt-container
 .gpt-animation-el
 .gpt-text
+
+Do not change the size of the main, container, or header elements. You may change the size of the button, input, and text elements. You may also add any additional styles to those classes as you see fit. and please do change the background color of the main element.
 `;
 
 export async function GET({ url: { searchParams } }) {
