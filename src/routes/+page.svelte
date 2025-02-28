@@ -1,4 +1,4 @@
 <script lang="ts">
 </script>
 
-<h1>hello world</h1>
+<h1 class="gpt-text">hello world</h1>

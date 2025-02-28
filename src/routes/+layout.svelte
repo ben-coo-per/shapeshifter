@@ -1,96 +1,65 @@
-<script>
-	let gptStyle = `
-   body {
-  background-color: #3a3a3a;
-  color: #d47f00;
-  font-family: Arial, sans-serif;
-}
+<script lang="ts">
+	let gptStyle = ``;
+	let gptSVG = ``;
 
-.gpt-button {
-  background-color: #d47f00;
-  color: #3a3a3a;
-  border: none;
-  padding: 10px 15px;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 5px;
-}
+	async function getStyle(words: string) {
+		const response = await fetch(`/get-style?words=${words}`);
+		gptStyle = await response.json();
+	}
 
-.gpt-button:hover {
-  background-color: #bf6f00;
-}
+	async function getSVG(word: string) {
+		const response = await fetch(`/get-svg?word=${word}`);
+		gptSVG = await response.json();
+	}
 
-.gpt-input {
-  background-color: #2a2a2a;
-  color: #d47f00;
-  border: 2px solid #d47f00;
-  padding: 8px;
-  font-size: 14px;
-  border-radius: 4px;
-}
+	function handleSubmit(event) {
+		event.preventDefault();
+		const words = Array.from(event.target.querySelectorAll('input')).map((input) => input.value);
 
-.gpt-header {
-  font-size: 24px;
-  font-weight: bold;
-  color: #d47f00;
-  text-shadow: 2px 2px 5px #222;
-}
-
-.gpt-container {
-  background-color: #222;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: inset 0 0 10px #111;
-}
-
-.gpt-animation-el {
-  background-color: #d47f00;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  box-shadow: 0px 0px 10px #ff9e00;
-  animation: goopyEffect 2s infinite alternate;
-}
-
-@keyframes goopyEffect {
-  0% {
-    transform: scale(1);
-    filter: blur(2px);
-  }
-  100% {
-    transform: scale(1.2);
-    filter: blur(5px);
-  }
-}`;
+		getStyle(words.join('+'));
+		getSVG(words[0]);
+	}
 </script>
 
 <svelte:head>
 	{@html `<style>${gptStyle}</style>`}
 </svelte:head>
 
-<div class="gpt-header header">
-	<h1>SHFTR</h1>
-	<div class="header__adjectives">
-		<input class="gpt-input" type="text" value="trendy" />
-		+
-		<input class="gpt-input" type="text" value="orange" />
-		+
-		<input class="gpt-input" type="text" value="goop" />
-		<button class="gpt-button">=</button>
+<main class="gpt-main">
+	<div class="gpt-header header">
+		<h1>SHFTR</h1>
 	</div>
-</div>
-<slot />
+	<h3 class="gpt-text">Enter three words to generate a style</h3>
+	<form onsubmit={handleSubmit} class="header__words">
+		<input class="gpt-input" type="text" />
+		+
+		<input class="gpt-input" type="text" />
+		+
+		<input class="gpt-input" type="text" />
+		<button class="gpt-button" type="submit">=</button>
+	</form>
+
+	{#if gptSVG}
+		{@html gptSVG}
+	{/if}
+	<slot></slot>
+</main>
 
 <style>
+	main {
+		height: 100vh;
+		margin: -8px;
+		padding: 8px;
+	}
 	.header {
 		padding: 10px 20px;
 		text-align: center;
 		display: flex;
-		justify-content: space-between;
-		align-items: center;
+		flex-direction: column;
+		align-items: flex-start;
 	}
 
-	.header__adjectives {
+	.header__words {
 		display: flex;
 		gap: 10px;
 		align-items: center;
