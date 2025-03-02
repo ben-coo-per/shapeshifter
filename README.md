@@ -8,3 +8,7 @@ The end result does a bit of both. It creates SVGs of the words you enter and up
 
 create a .env file and add a `SECRET_OPENAI_API_KEY` with your open AI key.
 Then, run `npm run dev`.
+
+
+https://github.com/user-attachments/assets/5167812f-362a-463c-8c0b-22de5884357e
+
